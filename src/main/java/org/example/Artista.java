@@ -1,7 +1,3 @@
-package org.example;
-
-import java.util.List;
-
 public class Artista {
     private Long id;
     private String nome;
@@ -11,4 +7,5 @@ public class Artista {
     private String portfolioLink;
     private List<Postagem> postagens;
     private List<Usuario> seguidores;
+
 }
