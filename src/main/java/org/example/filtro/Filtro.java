@@ -1,3 +1,5 @@
+package org.example.filtro;
+
 public class Filtro {
     private Long id;
     private String estiloArtistico; // Ex: Pixel Art, Pintura, 3D

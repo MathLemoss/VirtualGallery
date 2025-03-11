@@ -1,3 +1,9 @@
+package org.example.artista;
+
+import org.example.postagens.Postagens;
+import org.example.usuario.Usuario;
+import java.util.List;
+
 public class Artista {
     private Long id;
     private String nome;
@@ -5,7 +11,7 @@ public class Artista {
     private String senha;
     private String estiloArtistico;
     private String portfolioLink;
-    private List<Postagem> postagens;
+    private List<Postagens> postagens;
     private List<Usuario> seguidores;
 
 }
