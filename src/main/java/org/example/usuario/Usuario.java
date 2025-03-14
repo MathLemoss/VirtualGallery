@@ -12,4 +12,12 @@ public class Usuario {
     private List<Artista> artistasFavoritos;
     private List<Postagens> postagensCurtidas;
 
+    public void setNome(String nome) {
+    }
+
+    public void setEmail(String email) {
+    }
+
+    public void setSenha(String nome) {
+    }
 }
