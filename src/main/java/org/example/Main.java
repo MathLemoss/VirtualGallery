@@ -2,12 +2,12 @@ package org.example;
 
 import org.example.usuario.Usuario;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
-        Usuario usuario = new Usuario();
-        usuario.setNome("Matheus");
-        usuario.setEmail("exemplo@gmail.com");
-        usuario.setSenha("12345");
-
+        SpringApplication.run(Main.class, args);
     }
 }

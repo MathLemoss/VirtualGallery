@@ -17,17 +17,20 @@ public class FiltroController {
     private FiltroService filtroService;
 
     @PostMapping("/usuario")
-    public List<Favorito> filtrarPorUsuario(@RequestBody List<Favorito> favoritos, @RequestParam Usuario usuario) {
-        return filtroService.filtrarPorUsuario(favoritos, usuario);
+    public ResponseEntity<List<Favorito>> filtrarPorUsuario(@RequestBody List<Favorito> favoritos, @RequestParam Usuario usuario) {
+        List<Favorito> resultado = filtroService.filtrarPorUsuario(favoritos, usuario);
+        return ResponseEntity.ok(resultado);
     }
 
     @PostMapping("/artista")
-    public List<Favorito> filtrarPorArtista(@RequestBody List<Favorito> favoritos, @RequestParam Artista artista) {
-        return filtroService.filtrarPorArtista(favoritos, artista);
+    public ResponseEntity<List<Favorito>> filtrarPorArtista(@RequestBody List<Favorito> favoritos, @RequestParam Artista artista) {
+        List<Favorito> resultado = filtroService.filtrarPorArtista(favoritos, artista);
+        return ResponseEntity.ok(resultado);
     }
 
     @PostMapping("/postagem")
-    public List<Favorito> filtrarPorPostagem(@RequestBody List<Favorito> favoritos, @RequestParam Postagens postagem) {
-        return filtroService.filtrarPorPostagem(favoritos, postagem);
+    public ResponseEntity<List<Favorito>> filtrarPorPostagem(@RequestBody List<Favorito> favoritos, @RequestParam Postagens postagem) {
+        List<Favorito> resultado = filtroService.filtrarPorPostagem(favoritos, postagem);
+        return ResponseEntity.ok(resultado);
     }
 }
