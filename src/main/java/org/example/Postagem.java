@@ -1,5 +1,9 @@
 package org.example;
 
+import org.example.artista.Artista;
+import org.example.comentario.Comentario;
+import org.example.curtida.Curtida;
+
 import java.time.LocalDateTime;
 import java.util.List;
 

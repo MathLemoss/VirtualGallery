@@ -14,4 +14,43 @@ public class Compartilhar {
     private String plataforma; // Ex: Facebook, Twitter, WhatsApp
     private LocalDateTime dataCompartilhamento;
 
+    public Compartilhar() {}
+
+    public Compartilhar(Long id, Usuario usuario, Postagens postagem) {
+        this.id = id;
+        this.usuario = usuario;
+        this.postagemCompartilhada = postagem;
+        this.dataCompartilhamento = LocalDateTime.now();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Postagens getPostagem() {
+        return postagemCompartilhada;
+    }
+
+    public void setPostagem(Postagens postagem) {
+        this.postagemCompartilhada = postagem;
+    }
+
+    public LocalDateTime getDataCompartilhamento() {
+        return dataCompartilhamento;
+    }
+
+    public void setDataCompartilhamento(LocalDateTime now) {
+    }
 }
