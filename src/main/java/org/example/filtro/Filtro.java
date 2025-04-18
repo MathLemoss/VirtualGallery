@@ -4,22 +4,37 @@ import org.example.favorito.Favorito;
 import org.example.usuario.Usuario;
 import org.example.artista.Artista;
 import org.example.postagens.Postagens;
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
+@Document(collection = "filtros")
 public class Filtro {
-    private Long id;
+    @Id
+    private String id;
+    
+    @DBRef
     private Usuario usuario;
+    
+    @DBRef
     private Artista artista;
+    
+    @DBRef
     private Postagens postagem;
-    private String estiloArtistico; // Ex: Pixel Art, Pintura, 3D
-    private String localizacao; // Localização do artista
-    private String tipoConteudo; // Ex: Ilustração, Animação, Design de Personagens
+    
+    @Field("estilo_artistico")
+    private String estiloArtistico;
+    
+    private String localizacao;
+    
+    @Field("tipo_conteudo")
+    private String tipoConteudo;
 
     public Filtro() {}
 
-    public Filtro(Long id, Usuario usuario, Artista artista, Postagens postagem, String estiloArtistico, String localizacao, String tipoConteudo) {
-        this.id = id;
+    public Filtro(Usuario usuario, Artista artista, Postagens postagem, 
+                 String estiloArtistico, String localizacao, String tipoConteudo) {
         this.usuario = usuario;
         this.artista = artista;
         this.postagem = postagem;
@@ -28,11 +43,12 @@ public class Filtro {
         this.tipoConteudo = tipoConteudo;
     }
 
-    public Long getId() {
+    // Getters e Setters
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
