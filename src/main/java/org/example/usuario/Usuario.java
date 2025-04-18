@@ -4,30 +4,44 @@ import org.example.postagens.Postagens;
 import org.example.curtida.Curtida;
 import org.example.compartilhar.Compartilhar;
 import org.example.favorito.Favorito;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.List;
 
+@Document(collection = "usuarios")
 public class Usuario {
-    private Long id;
+    @Id
+    private String id;
+    
     private String nome;
     private String email;
+    
+    @DBRef
     private List<Postagens> postagens;
+    
+    @DBRef
     private List<Curtida> curtidas;
+    
+    @DBRef
     private List<Compartilhar> compartilhamentos;
+    
+    @DBRef
     private List<Favorito> favoritos;
 
     public Usuario() {}
 
-    public Usuario(Long id, String nome, String email) {
-        this.id = id;
+    public Usuario(String nome, String email) {
         this.nome = nome;
         this.email = email;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

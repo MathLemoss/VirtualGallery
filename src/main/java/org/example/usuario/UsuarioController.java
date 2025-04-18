@@ -3,6 +3,9 @@ package org.example.usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -18,21 +21,44 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> buscarUsuario(@PathVariable Long id) {
-        return ResponseEntity.of(usuarioService.buscarUsuario(id));
+    public ResponseEntity<Usuario> buscarUsuario(@PathVariable String id) {
+        return usuarioService.buscarUsuario(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Usuario criarUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.criarUsuario(usuario);
+    public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario) {
+        Usuario usuarioSalvo = usuarioService.criarUsuario(usuario);
+        
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(usuarioSalvo.getId())
+                .toUri();
+                
+        return ResponseEntity.created(location).body(usuarioSalvo);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarUsuario(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarUsuario(@PathVariable String id) {
         if (usuarioService.deletarUsuario(id)) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
     }
-}
 
+    // Novos endpoints
+    @GetMapping("/buscar")
+    public List<Usuario> buscarPorNome(@RequestParam String nome) {
+        return usuarioService.buscarPorNome(nome);
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Usuario> buscarPorEmail(@PathVariable String email) {
+        Usuario usuario = usuarioService.buscarPorEmail(email);
+        if (usuario != null) {
+            return ResponseEntity.ok(usuario);
+        }
+        return ResponseEntity.notFound().build();
+    }
+}
