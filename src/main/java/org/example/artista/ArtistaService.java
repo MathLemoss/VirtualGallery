@@ -1,40 +1,54 @@
 package org.example.artista;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ArtistaService {
-    private List<Artista> artistas = new ArrayList<>();
-    private Long proximoId = 1L;
+    @Autowired
+    private ArtistaRepository artistaRepository;
 
-    public List<Artista> listarArtistas() {
-        return artistas;
+    public Page<Artista> listarArtistas(Pageable pageable) {
+        return artistaRepository.findAll(pageable);
     }
 
-    public Optional<Artista> buscarArtista(Long id) {
-        return artistas.stream().filter(a -> a.getId().equals(id)).findFirst();
+    public Optional<Artista> buscarArtista(String id) {
+        return artistaRepository.findById(id);
     }
 
     public Artista criarArtista(Artista artista) {
-        artista.setId(proximoId++);
-        artistas.add(artista);
-        return artista;
+        return artistaRepository.save(artista);
     }
 
-    public Optional<Artista> atualizarArtista(Long id, Artista artistaAtualizado) {
-        Optional<Artista> artistaExistente = buscarArtista(id);
-        artistaExistente.ifPresent(artista -> {
-            artista.setNomeArtista(artistaAtualizado.getNome());
-            artista.setEstilo(artistaAtualizado.getEstilo());
-        });
-        return artistaExistente;
+    public Optional<Artista> atualizarArtista(String id, Artista artistaAtualizado) {
+        return artistaRepository.findById(id)
+                .map(artista -> {
+                    artista.setNome(artistaAtualizado.getNome());
+                    artista.setEmail(artistaAtualizado.getEmail());
+                    artista.setSenha(artistaAtualizado.getSenha());
+                    artista.setEstilo(artistaAtualizado.getEstilo());
+                    artista.setPortfolioLink(artistaAtualizado.getPortfolioLink());
+                    return artistaRepository.save(artista);
+                });
     }
 
-    public boolean deletarArtista(Long id) {
-        return artistas.removeIf(artista -> artista.getId().equals(id));
+    public boolean deletarArtista(String id) {
+        if (artistaRepository.existsById(id)) {
+            artistaRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    public Page<Artista> filtrarPorEstilo(String estilo, Pageable pageable) {
+        return artistaRepository.findByEstiloContainingIgnoreCase(estilo, pageable);
+    }
+
+    public Page<Artista> filtrarPorNome(String nome, Pageable pageable) {
+        return artistaRepository.findByNomeContainingIgnoreCase(nome, pageable);
     }
 }

@@ -3,31 +3,43 @@ package org.example.postagens;
 import org.example.usuario.Usuario;
 import org.example.curtida.Curtida;
 import org.example.compartilhar.Compartilhar;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Document(collection = "postagens")
 public class Postagens {
-    private Long id;
+    @Id
+    private String id; 
+    
+    @DBRef
     private Usuario usuario;
+    
     private String conteudo;
     private LocalDateTime dataPostagem;
+    
+    @DBRef
     private List<Curtida> curtidas;
+    
+    @DBRef
     private List<Compartilhar> compartilhamentos;
 
     public Postagens() {}
 
-    public Postagens(Long id, Usuario usuario, String conteudo) {
-        this.id = id;
+    public Postagens(Usuario usuario, String conteudo) {
         this.usuario = usuario;
         this.conteudo = conteudo;
         this.dataPostagem = LocalDateTime.now();
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -51,6 +63,10 @@ public class Postagens {
         return dataPostagem;
     }
 
+    public void setDataPostagem(LocalDateTime dataPostagem) {
+        this.dataPostagem = dataPostagem;
+    }
+
     public List<Curtida> getCurtidas() {
         return curtidas;
     }
@@ -65,9 +81,5 @@ public class Postagens {
 
     public void setCompartilhamentos(List<Compartilhar> compartilhamentos) {
         this.compartilhamentos = compartilhamentos;
-    }
-
-    public LocalDateTime setDataPostagem(LocalDateTime now) {
-        return dataPostagem;
     }
 }

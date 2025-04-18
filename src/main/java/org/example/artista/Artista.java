@@ -2,10 +2,15 @@ package org.example.artista;
 
 import org.example.postagens.Postagens;
 import org.example.usuario.Usuario;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.List;
 
+@Document(collection = "artistas")
 public class Artista {
-    private Long id;
+    @Id
+    private String id;
     private String nome;
     private String email;
     private String senha;
@@ -14,20 +19,19 @@ public class Artista {
     private List<Postagens> postagens;
     private List<Usuario> seguidores;
 
-
     public Artista() {}
 
-    public Artista(Long id, String nome, String estilo) {
-        this.id = id;
+    public Artista(String nome, String estilo) {
         this.nome = nome;
         this.estilo = estilo;
     }
 
-    public Long getId() {
+    // Getters e Setters
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -35,8 +39,24 @@ public class Artista {
         return nome;
     }
 
-    public void setNomeArtista(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public String getEstilo() {
@@ -45,5 +65,29 @@ public class Artista {
 
     public void setEstilo(String estilo) {
         this.estilo = estilo;
+    }
+
+    public String getPortfolioLink() {
+        return portfolioLink;
+    }
+
+    public void setPortfolioLink(String portfolioLink) {
+        this.portfolioLink = portfolioLink;
+    }
+
+    public List<Postagens> getPostagens() {
+        return postagens;
+    }
+
+    public void setPostagens(List<Postagens> postagens) {
+        this.postagens = postagens;
+    }
+
+    public List<Usuario> getSeguidores() {
+        return seguidores;
+    }
+
+    public void setSeguidores(List<Usuario> seguidores) {
+        this.seguidores = seguidores;
     }
 }
