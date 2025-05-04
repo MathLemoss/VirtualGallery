@@ -1,32 +1,61 @@
 package org.example.compartilhar;
 
+import org.example.artista.Artista;
+import org.example.postagens.Postagens;
+import org.example.usuario.Usuario;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CompartilharService {
-    private List<Compartilhar> compartilhamentos = new ArrayList<>();
-    private Long proximoId = 1L;
+    @Autowired
+    private CompartilharRepository compartilharRepository;
 
-    public List<Compartilhar> listarCompartilhamentos() {
-        return compartilhamentos;
+    public Compartilhar compartilharPostagem(Usuario usuario, Postagens postagem, String plataforma) {
+        Compartilhar compartilhar = new Compartilhar(usuario, postagem, plataforma);
+        return compartilharRepository.save(compartilhar);
     }
 
-    public Optional<Compartilhar> buscarCompartilhamento(Long id) {
-        return compartilhamentos.stream().filter(c -> c.getId().equals(id)).findFirst();
+    public Compartilhar compartilharArtista(Usuario usuario, Artista artista, String plataforma) {
+        Compartilhar compartilhar = new Compartilhar(usuario, artista, plataforma);
+        return compartilharRepository.save(compartilhar);
     }
 
-    public Compartilhar criarCompartilhamento(Compartilhar compartilhar) {
-        compartilhar.setId(proximoId++);
-        compartilhar.setDataCompartilhamento(LocalDateTime.now());
-        compartilhamentos.add(compartilhar);
-        return compartilhar;
+    public Page<Compartilhar> listarCompartilhamentos(Pageable pageable) {
+        return compartilharRepository.findAll(pageable);
     }
 
-    public boolean deletarCompartilhamento(Long id) {
-        return compartilhamentos.removeIf(compartilhar -> compartilhar.getId().equals(id));
+    public Optional<Compartilhar> buscarCompartilhamento(String id) {
+        return compartilharRepository.findById(id);
+    }
+
+    public void deletarCompartilhamento(String id) {
+        compartilharRepository.deleteById(id);
+    }
+
+    public List<Compartilhar> buscarPorUsuario(Usuario usuario) {
+        return compartilharRepository.findByUsuario(usuario);
+    }
+
+    public List<Compartilhar> buscarPorPostagem(Postagens postagem) {
+        return compartilharRepository.findByPostagemCompartilhada(postagem);
+    }
+
+    public List<Compartilhar> buscarPorArtista(Artista artista) {
+        return compartilharRepository.findByArtistaCompartilhado(artista);
+    }
+
+    public List<Compartilhar> buscarPorPlataforma(String plataforma) {
+        return compartilharRepository.findByPlataforma(plataforma);
+    }
+
+    public List<Compartilhar> buscarPorPeriodo(LocalDateTime inicio, LocalDateTime fim) {
+        return compartilharRepository.findByDataCompartilhamentoBetween(inicio, fim);
     }
 }

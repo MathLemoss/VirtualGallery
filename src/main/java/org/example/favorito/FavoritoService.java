@@ -1,32 +1,61 @@
 package org.example.favorito;
 
+import org.example.artista.Artista;
+import org.example.postagens.Postagens;
+import org.example.usuario.Usuario;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class FavoritoService {
-    private List<Favorito> favoritos = new ArrayList<>();
-    private Long proximoId = 1L;
+    @Autowired
+    private FavoritoRepository favoritoRepository;
 
     public List<Favorito> listarFavoritos() {
-        return favoritos;
+        return favoritoRepository.findAll();
     }
 
-    public Optional<Favorito> buscarFavorito(Long id) {
-        return favoritos.stream().filter(f -> f.getId().equals(id)).findFirst();
+    public Page<Favorito> listarFavoritos(Pageable pageable) {
+        return favoritoRepository.findAll(pageable);
+    }
+
+    public Optional<Favorito> buscarFavorito(String id) {
+        return favoritoRepository.findById(id);
     }
 
     public Favorito criarFavorito(Favorito favorito) {
-        favorito.setId(proximoId++);
         favorito.setDataFavorito(LocalDateTime.now());
-        favoritos.add(favorito);
-        return favorito;
+        return favoritoRepository.save(favorito);
     }
 
-    public boolean deletarFavorito(Long id) {
-        return favoritos.removeIf(favorito -> favorito.getId().equals(id));
+    public boolean deletarFavorito(String id) {
+        if (favoritoRepository.existsById(id)) {
+            favoritoRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    // Métodos adicionais
+    public List<Favorito> buscarPorUsuario(Usuario usuario) {
+        return favoritoRepository.findByUsuario(usuario);
+    }
+
+    public List<Favorito> buscarPorArtista(Artista artista) {
+        return favoritoRepository.findByArtistaFavoritado(artista);
+    }
+
+    public List<Favorito> buscarPorPostagem(Postagens postagem) {
+        return favoritoRepository.findByPostagem(postagem);
+    }
+
+    public List<Favorito> buscarPorPeriodo(LocalDateTime inicio, LocalDateTime fim) {
+        return favoritoRepository.findByDataFavoritoBetween(inicio, fim);
     }
 }

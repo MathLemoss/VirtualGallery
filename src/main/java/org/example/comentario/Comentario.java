@@ -2,31 +2,41 @@ package org.example.comentario;
 
 import org.example.postagens.Postagens;
 import org.example.usuario.Usuario;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
+@Document(collection = "comentarios")
 public class Comentario {
-    private Long id;
+    @Id
+    private String id;
+    
+    @DBRef
     private Usuario usuario;
+    
+    @DBRef
     private Postagens postagem;
+    
     private String texto;
     private LocalDateTime dataComentario;
 
     public Comentario() {}
 
-    public Comentario(Long id, Usuario usuario, Postagens postagem, String texto) {
-        this.id = id;
+    public Comentario(Usuario usuario, Postagens postagem, String texto) {
         this.usuario = usuario;
         this.postagem = postagem;
         this.texto = texto;
         this.dataComentario = LocalDateTime.now();
     }
 
-    public Long getId() {
+    // Getters e Setters
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

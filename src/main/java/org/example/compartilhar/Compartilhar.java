@@ -3,31 +3,51 @@ package org.example.compartilhar;
 import org.example.artista.Artista;
 import org.example.postagens.Postagens;
 import org.example.usuario.Usuario;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
+@Document(collection = "compartilhamentos")
 public class Compartilhar {
-    private Long id;
-    private Usuario usuario; // Usuário que compartilhou
-    private Artista artistaCompartilhado; // Pode ser nulo se for uma postagem compartilhada
-    private Postagens postagemCompartilhada; // Pode ser nulo se for um artista compartilhado
-    private String plataforma; // Ex: Facebook, Twitter, WhatsApp
+    @Id
+    private String id;
+    
+    @DBRef
+    private Usuario usuario;
+    
+    @DBRef
+    private Artista artistaCompartilhado;
+    
+    @DBRef
+    private Postagens postagemCompartilhada;
+    
+    private String plataforma;
     private LocalDateTime dataCompartilhamento;
 
     public Compartilhar() {}
 
-    public Compartilhar(Long id, Usuario usuario, Postagens postagem) {
-        this.id = id;
+    public Compartilhar(Usuario usuario, Postagens postagem, String plataforma) {
         this.usuario = usuario;
         this.postagemCompartilhada = postagem;
+        this.plataforma = plataforma;
         this.dataCompartilhamento = LocalDateTime.now();
     }
 
-    public Long getId() {
+    public Compartilhar(Usuario usuario, Artista artista, String plataforma) {
+        this.usuario = usuario;
+        this.artistaCompartilhado = artista;
+        this.plataforma = plataforma;
+        this.dataCompartilhamento = LocalDateTime.now();
+    }
+
+    // Getters e Setters
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -39,18 +59,35 @@ public class Compartilhar {
         this.usuario = usuario;
     }
 
-    public Postagens getPostagem() {
+    public Artista getArtistaCompartilhado() {
+        return artistaCompartilhado;
+    }
+
+    public void setArtistaCompartilhado(Artista artistaCompartilhado) {
+        this.artistaCompartilhado = artistaCompartilhado;
+    }
+
+    public Postagens getPostagemCompartilhada() {
         return postagemCompartilhada;
     }
 
-    public void setPostagem(Postagens postagem) {
-        this.postagemCompartilhada = postagem;
+    public void setPostagemCompartilhada(Postagens postagemCompartilhada) {
+        this.postagemCompartilhada = postagemCompartilhada;
+    }
+
+    public String getPlataforma() {
+        return plataforma;
+    }
+
+    public void setPlataforma(String plataforma) {
+        this.plataforma = plataforma;
     }
 
     public LocalDateTime getDataCompartilhamento() {
         return dataCompartilhamento;
     }
 
-    public void setDataCompartilhamento(LocalDateTime now) {
+    public void setDataCompartilhamento(LocalDateTime dataCompartilhamento) {
+        this.dataCompartilhamento = dataCompartilhamento;
     }
 }

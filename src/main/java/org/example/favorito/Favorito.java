@@ -3,30 +3,43 @@ package org.example.favorito;
 import org.example.postagens.Postagens;
 import org.example.usuario.Usuario;
 import org.example.artista.Artista;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDateTime;
 
+@Document(collection = "favoritos")
 public class Favorito {
-    private Long id;
+    @Id
+    private String id;
+    
+    @DBRef
     private Usuario usuario;
+    
+    @DBRef
     private Postagens postagem;
+    
+    @DBRef
     private Artista artistaFavoritado;
+    
     private LocalDateTime dataFavorito;
 
     public Favorito() {}
 
-    public Favorito(Long id, Usuario usuario, Postagens postagem, Artista artistaFavoritado) {
-        this.id = id;
+    public Favorito(Usuario usuario, Postagens postagem, Artista artistaFavoritado) {
         this.usuario = usuario;
         this.postagem = postagem;
         this.artistaFavoritado = artistaFavoritado;
         this.dataFavorito = LocalDateTime.now();
     }
 
-    public Long getId() {
+    
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -58,6 +71,7 @@ public class Favorito {
         return dataFavorito;
     }
 
-    public void setDataFavorito(LocalDateTime now) {
+    public void setDataFavorito(LocalDateTime dataFavorito) {
+        this.dataFavorito = dataFavorito;
     }
 }
