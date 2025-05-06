@@ -8,18 +8,21 @@ import com.virtualgallery.backend.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User getUserById(String id) {
         return userRepository.findById(id)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
     }
 
     public User registerUser(RegisterRequest request) {
@@ -29,7 +32,7 @@ public class UserService {
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
+        user.setPassword(passwordEncoder.encode(request.getPassword())); // Hash da senha
         user.setInstagram(request.getInstagram());
         user.setLinkedin(request.getLinkedin());
         user.setBio(request.getBio());
@@ -38,10 +41,12 @@ public class UserService {
 
     public User loginUser(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuário não encontrado"));
-        if (!user.getPassword().equals(request.getPassword())) {
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuário não encontrado"));
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Senha incorreta");
         }
+
         return user;
     }
 
@@ -52,4 +57,5 @@ public class UserService {
         user.setBio(request.getBio());
         return userRepository.save(user);
     }
-} 
+}
+
