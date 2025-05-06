@@ -1,0 +1,41 @@
+# Git ignore para backend Spring Boot/Maven
+
+# Diretório de build do Maven
+target/
+
+# Maven Wrapper
+.mvn/wrapper/maven-wrapper.jar
+
+# Dependências baixadas (se você estiver usando o wrapper)
+.mvn/wrapper/maven-wrapper.jar
+
+# Artefatos Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Logs
+logs/
+*.log
+
+# IDEs e editores
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Arquivos de ambiente
+.env 
