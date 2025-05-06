@@ -1,0 +1,7 @@
+com\virtualgallery\backend\controller\AuthController.class
+com\virtualgallery\backend\dto\LoginRequest.class
+com\virtualgallery\backend\dto\RegisterRequest.class
+com\virtualgallery\backend\repository\PostRepository.class
+com\virtualgallery\backend\model\User.class
+com\virtualgallery\backend\repository\UserRepository.class
+com\virtualgallery\backend\VirtualGalleryBackendApplication.class

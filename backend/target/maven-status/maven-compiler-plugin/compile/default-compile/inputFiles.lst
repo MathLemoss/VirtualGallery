@@ -1,0 +1,13 @@
+C:\Users\bruno\Documents\eumereco\VirtualGallery-frontend\backend\src\main\java\com\virtualgallery\backend\dto\UpdateProfileRequest.java
+C:\Users\bruno\Documents\eumereco\VirtualGallery-frontend\backend\src\main\java\com\virtualgallery\backend\model\User.java
+C:\Users\bruno\Documents\eumereco\VirtualGallery-frontend\backend\src\main\java\com\virtualgallery\backend\repository\UserRepository.java
+C:\Users\bruno\Documents\eumereco\VirtualGallery-frontend\backend\src\main\java\com\virtualgallery\backend\repository\PostRepository.java
+C:\Users\bruno\Documents\eumereco\VirtualGallery-frontend\backend\src\main\java\com\virtualgallery\backend\dto\RegisterRequest.java
+C:\Users\bruno\Documents\eumereco\VirtualGallery-frontend\backend\src\main\java\com\virtualgallery\backend\controller\AuthController.java
+C:\Users\bruno\Documents\eumereco\VirtualGallery-frontend\backend\src\main\java\com\virtualgallery\backend\dto\CommentRequest.java
+C:\Users\bruno\Documents\eumereco\VirtualGallery-frontend\backend\src\main\java\com\virtualgallery\backend\model\Post.java
+C:\Users\bruno\Documents\eumereco\VirtualGallery-frontend\backend\src\main\java\com\virtualgallery\backend\VirtualGalleryBackendApplication.java
+C:\Users\bruno\Documents\eumereco\VirtualGallery-frontend\backend\src\main\java\com\virtualgallery\backend\controller\PostController.java
+C:\Users\bruno\Documents\eumereco\VirtualGallery-frontend\backend\src\main\java\com\virtualgallery\backend\controller\UserController.java
+C:\Users\bruno\Documents\eumereco\VirtualGallery-frontend\backend\src\main\java\com\virtualgallery\backend\dto\LoginRequest.java
+C:\Users\bruno\Documents\eumereco\VirtualGallery-frontend\backend\src\main\java\com\virtualgallery\backend\dto\PostRequest.java
